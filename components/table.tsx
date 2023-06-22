@@ -2,7 +2,7 @@ import styles from "./table.module.css";
 
 interface Props {
   headers: string[];
-  data: string[][] | number[][];
+  data: (string | number)[][];
 }
 
 function makeExcerpt(text: string, length: number) {
