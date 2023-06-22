@@ -1,0 +1,44 @@
+.card {
+    background: rgba(56, 115, 173, 0.1);
+    border: 1px solid #3873ad;
+    box-shadow: 0px 4px 40px #3873ad42;
+    border-radius: 15px;
+    padding: 1.4rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: transform 0.2s ease-in, background 0.2s ease-in-out;
+}
+
+.card:hover {
+    transform: scale(1.01);
+    background: rgba(43, 92, 141, 0.2);
+}
+
+.card_title {
+    font-weight: 600;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 28px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.card_value {
+    font-weight: 500;
+    font-size: 40px;
+    line-height: 50px;
+    color: #ffffff;
+}
+
+.card_symbol {
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 26px;
+}
+
+.card_additional {
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 26px;
+}
