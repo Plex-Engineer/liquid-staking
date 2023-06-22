@@ -176,57 +176,14 @@ export const result = {
           requester: "canto82137928479834682746827468234",
           insurance_id: "5",
         },
-        {
-          requester: "canto82137928479834682746827468234",
-          insurance_id: "6",
-        },
-        {
-          requester: "canto82137928479834682746827468234",
-          insurance_id: "7",
-        },
-        {
-          requester: "canto82137928479834682746827468234",
-          insurance_id: "8",
-        },
-        {
-          requester: "canto82137928479834682746827468234",
-          insurance_id: "9",
-        },
-        {
-          requester: "canto82137928479834682746827468234",
-          insurance_id: "10",
-        },
-        {
-          requester: "canto82137928479834682746827468234",
-          insurance_id: "11",
-        },
-        {
-          requester: "canto82137928479834682746827468234",
-          insurance_id: "12",
-        },
       ],
     },
     liquid_unstake_requests: [
       {
         requester: "canto82137928479834682746827468234",
-        insurance_id: "12",
-      },
-      {
-        requester: "canto82137928479834682746827468234",
-        insurance_id: "11",
-      },
-      {
-        requester: "canto82137928479834682746827468234",
         insurance_id: "10",
       },
-      {
-        requester: "canto82137928479834682746827468234",
-        insurance_id: "9",
-      },
-      {
-        requester: "canto82137928479834682746827468234",
-        insurance_id: "8",
-      },
+
       {
         requester: "canto82137928479834682746827468234",
         insurance_id: "7",
@@ -242,18 +199,6 @@ export const result = {
       {
         requester: "canto82137928479834682746827468234",
         insurance_id: "4",
-      },
-      {
-        requester: "canto82137928479834682746827468234",
-        insurance_id: "3",
-      },
-      {
-        requester: "canto82137928479834682746827468234",
-        insurance_id: "2",
-      },
-      {
-        requester: "canto82137928479834682746827468234",
-        insurance_id: "1",
       },
     ],
   },
