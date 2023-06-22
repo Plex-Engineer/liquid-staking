@@ -4,6 +4,7 @@ import { Space_Grotesk } from "next/font/google";
 
 import { result } from "@/config/result";
 import Table from "@/components/table";
+import Header from "@/components/header";
 
 const spaceGrotesk = Space_Grotesk({
   weight: "400",
@@ -26,7 +27,9 @@ export default function Home() {
 
   return (
     <main className={styles.main + " " + spaceGrotesk.className}>
+      <Header />
       <div className={styles.container}>
+        <h1>Liquid Staking Dashboard</h1>
         <div className={styles["tiles-grid"]}>
           {result.LS_Dashboard.map((item, index) => (
             <DCard
