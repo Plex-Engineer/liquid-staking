@@ -70,7 +70,11 @@ export default function Home() {
           data={result.Insurances.candidates.map((item) => Object.values(item))}
         />
       </div>
-
+      <div
+        style={{
+          height: "4.3rem",
+        }}
+      ></div>
       <Text size="lg" font="Video_Type" align="center">
         Pending Requests
       </Text>

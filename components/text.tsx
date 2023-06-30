@@ -1,8 +1,8 @@
-import { Inter } from "next/font/google";
+import { Roboto } from "next/font/google";
 import localFont from "next/font/local";
 
 interface Props {
-  font?: "Video_Type" | "Inter";
+  font?: "Video_Type" | "Roboto";
   weight?: "400" | "500" | "600" | "700";
   size?: "sm" | "md" | "lg";
   align?: "left" | "center" | "right";
@@ -14,7 +14,7 @@ const videoType = localFont({
   weight: "300",
   style: "normal",
 });
-const inter = Inter({
+const roboto = Roboto({
   weight: "400",
   subsets: ["latin"],
 });
@@ -22,7 +22,7 @@ const Text = (props: Props) => {
   return (
     <p
       className={
-        props.font == "Video_Type" ? videoType.className : inter.className
+        props.font == "Video_Type" ? videoType.className : roboto.className
       }
       style={{
         fontSize:
