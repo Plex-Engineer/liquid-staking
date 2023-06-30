@@ -1,16 +1,10 @@
 import DCard from "@/components/d_card";
 import styles from "./page.module.css";
-import { Space_Grotesk, Inter } from "next/font/google";
-
+import { Inter } from "next/font/google";
 import { result } from "@/config/result";
 import Table from "@/components/table";
 import Header from "@/components/header";
 import Text from "@/components/text";
-
-const spaceGrotesk = Space_Grotesk({
-  weight: "400",
-  subsets: ["latin"],
-});
 
 const inter = Inter({
   weight: "400",
@@ -32,14 +26,10 @@ export default function Home() {
   //   const data = Convert.toLSData(JSON.stringify(result));
 
   return (
-    <main
-      className={
-        styles.main + " " + spaceGrotesk.className + " " + inter.className
-      }
-    >
+    <main className={styles.main + " " + " " + inter.className}>
       <Header />
       <div className={styles.container}>
-        <Text size="lg" font="Inter">
+        <Text size="lg" font="Video_Type">
           Liquid Staking Dashboard
         </Text>
         <div className={styles["tiles-grid"]}>
@@ -59,10 +49,12 @@ export default function Home() {
         </div>
       </div>
       <div className={styles["table-container"]}>
-        <Text size="lg" font="Inter">
+        <Text size="lg" font="Video_Type">
           Insurances
         </Text>
-        <Text size="md">Active (Paired Insurances)</Text>
+        <Text size="md" font="Video_Type">
+          Active (Paired Insurances)
+        </Text>
         <Table
           headers={Object.keys(result.Insurances.active[0])}
           data={result.Insurances.active.map((item) => Object.values(item))}
@@ -70,19 +62,23 @@ export default function Home() {
       </div>
 
       <div className={styles["table-container"]}>
-        <Text size="md">Candidates (Pairing Insurances)</Text>
+        <Text size="md" font="Video_Type">
+          Candidates (Pairing Insurances)
+        </Text>
         <Table
           headers={Object.keys(result.Insurances.candidates[0])}
           data={result.Insurances.candidates.map((item) => Object.values(item))}
         />
       </div>
 
-      <Text size="lg" font="Inter" align="center">
+      <Text size="lg" font="Video_Type" align="center">
         Pending Requests
       </Text>
       <div className={styles.row}>
         <div className={styles["table-container"]}>
-          <Text size="md">Withdraw Insurance Requests</Text>
+          <Text size="md" font="Video_Type">
+            Withdraw Insurance Requests
+          </Text>
           <Table
             headers={Object.keys(
               result.Insurances.pending.withdraw_requests[0]
@@ -93,7 +89,9 @@ export default function Home() {
           />
         </div>
         <div className={styles["table-container"]}>
-          <Text size="md">Liquid Unstake Requests</Text>
+          <Text size="md" font="Video_Type">
+            Liquid Unstake Requests
+          </Text>
           <Table
             headers={Object.keys(result.Insurances.liquid_unstake_requests[0])}
             data={result.Insurances.liquid_unstake_requests.map((item) =>

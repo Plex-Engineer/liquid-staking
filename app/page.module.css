@@ -1,14 +1,16 @@
 .main {
     display: flex;
     flex-direction: column;
-    align-items: stretch;
-    padding: 1rem 6rem;
+    align-items: center;
+    padding: 1rem 1rem;
     min-height: 100vh;
 }
 
 .row {
     display: flex;
     gap: 4rem;
+    max-width: 1120px;
+    width: 100%;
 }
 .container {
     display: flex;
@@ -16,16 +18,18 @@
     justify-content: center;
     align-items: center;
     max-width: 1120px;
-    width: 100%;
+    width: 100vw;
     margin: 4rem auto;
     gap: 3rem;
+    background-color: red;
 }
 
 .tiles-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    grid-gap: 2rem;
+    grid-gap: 16px;
     width: 100%;
+    background-color: green;
 }
 .table-container {
     display: flex;
@@ -35,6 +39,8 @@
     flex-grow: 2;
     width: 100%;
     align-items: center;
+    max-width: 1120px;
+    background-color: blue;
 }
 /* Enable hover only on non-touch devices */
 @media (hover: hover) and (pointer: fine) {
