@@ -59,6 +59,24 @@
     margin: 0;
 }
 
+h1 {
+    font-family: "Inter";
+    font-size: 34px;
+    font-weight: 400;
+    line-height: 46px;
+    letter-spacing: 0em;
+    text-align: center;
+}
+
+h3 {
+    font-family: "Inter";
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 26px;
+    text-align: center;
+    color: #ffffff;
+}
+
 html,
 body {
     max-width: 100vw;
@@ -68,7 +86,6 @@ body {
 body {
     color: rgb(var(--foreground-rgb));
     /* background: linear-gradient(to bottom, transparent, rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb)); */
-    min-height: 500vh;
     background: radial-gradient(128.19% 82.02% at 50.04% 66.23%, #0e1a2a 0%, #0c1624 30.73%, #030309 100%);
 }
 
