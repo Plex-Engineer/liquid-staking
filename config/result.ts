@@ -1,53 +1,61 @@
 export const result = {
   LS_Dashboard: [
     {
+      key: "total_supply",
       name: "Total Supply of LSCanto",
       value: "25000000",
       symbol: "LSCanto",
-
       additional: "",
     },
     {
+      key: "insurance_coverage",
       name: "Insurance Coverage",
       value: "25000000",
       symbol: "canto",
       additional: "(= 5 chunks)",
     },
     {
+      key: "insurance_collateral",
       name: "Insurance Collateral",
       value: "12500",
       symbol: "canto",
     },
     {
       name: "Accumulated Commission",
+      key: "accumulated_commission",
       value: "600000",
       symbol: "canto",
     },
     {
       name: "Mint Rate",
+      key: "mint_rate",
       value: "0.98",
       symbol: "canto",
       additional: "(1 Canto = 0.98 LSCanto)",
     },
     {
       name: "Remaining Chunk Slots",
+      key: "remaining_chunk_slots",
       value: "5",
       additional: "(=25M canto)",
     },
     {
       name: "Remaining time to epoch",
+      key: "remaining_time_to_epoch",
       value: "5",
       symbol: "more days",
       type: "DateTime",
     },
     {
       name: "Unbonding Chunks Amount",
+      key: "unbonding_chunks_amount",
       value: "25000000",
       symbol: "canto",
       additional: "(= 5 chunks is unbonding)",
     },
     {
       name: "Unpairing Insurance Amount",
+      key: "unpairing_insurance_amount",
       value: "125000",
       symbol: "canto",
       additional: "(= 7 unpairing insurances )",
