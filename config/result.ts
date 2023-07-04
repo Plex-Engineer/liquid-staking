@@ -1,22 +1,22 @@
 export const result = {
   LS_Dashboard: [
     {
-      key: "total_supply",
       name: "Total Supply of LSCanto",
+      key: "total_supply_of_ls_canto",
       value: "25000000",
       symbol: "LSCanto",
       additional: "",
     },
     {
-      key: "insurance_coverage",
       name: "Insurance Coverage",
+      key: "insurance_coverage",
       value: "25000000",
       symbol: "canto",
       additional: "(= 5 chunks)",
     },
     {
-      key: "insurance_collateral",
       name: "Insurance Collateral",
+      key: "insurance_collateral",
       value: "12500",
       symbol: "canto",
     },
