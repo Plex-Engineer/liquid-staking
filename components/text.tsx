@@ -14,10 +14,12 @@ const videoType = localFont({
   weight: "300",
   style: "normal",
 });
+
 const roboto = Roboto({
   weight: "400",
   subsets: ["latin"],
 });
+
 const Text = (props: Props) => {
   return (
     <p

@@ -5,6 +5,7 @@ import { result } from "@/config/result";
 import Table from "@/components/table";
 import Header from "@/components/header";
 import Text from "@/components/text";
+import { testAll, testMessage } from "./actions";
 
 const inter = Inter({
   weight: "400",
@@ -24,7 +25,7 @@ function toCurrencyFormat(value: string) {
 }
 export default function Home() {
   //   const data = Convert.toLSData(JSON.stringify(result));
-
+  testAll();
   return (
     <main className={styles.main + " " + " " + inter.className}>
       <Header />
