@@ -54,7 +54,7 @@ async function getChunks() {
 }
 
 async function getChunksUnpairingForUnstakingChunkInfos() {
-  const url = `${baseURL}/v1/chunks/unpairing_for_unstaking_chunk_infos`;
+  const url = `${baseURL}/v1/chunks/unpairing_for_unstaking_chunk_infos?queued=true`;
   try {
     const response = await fetch(url);
     const json: {
@@ -211,6 +211,13 @@ async function getInsurance(id: string) {
   }
 }
 
+function fromWei(amount: string) {
+  return (parseFloat(amount) / 1000000000000000000).toString();
+}
+
+function secondsToDays(seconds: string) {
+  return (parseFloat(seconds) / 86400).toString();
+}
 async function getInsuranceWithdrawInsuranceRequest(id: string) {
   const url = `${baseURL}/v1/insurances/${id}/withdraw_insurance_requests`;
   try {
@@ -278,6 +285,8 @@ async function getStates() {
         fee_rate: string;
         utilization_ratio: string;
         remaining_chunk_slots: string;
+        num_paired_chunks: string;
+        chunk_size: string;
         discount_rate: string;
         total_del_shares: string;
         total_remaining_rewards: string;
@@ -294,43 +303,170 @@ async function getStates() {
     console.log(error);
   }
 }
-export async function testMessage() {
-  console.log("Hello World");
+
+async function getAccumulatedCommission(fee_pool_address: string) {
+  const url = `https://liquidstaking.plexnode.wtf/cosmos/bank/v1beta1/balances/${fee_pool_address}/by_denom?denom=acanto`;
+  try {
+    const response = await fetch(url);
+    const json: {
+      balance: {
+        denom: string;
+        amount: string;
+      };
+    } = await response.json();
+    return json;
+  } catch (error) {
+    console.log(error);
+  }
 }
 
-//a function to testAll the functions
+async function getInsuranceAmount(derived_address: string) {
+  const url = `https://liquidstaking.plexnode.wtf/cosmos/bank/v1beta1/balances/${derived_address}/by_denom?denom=acanto`;
+  try {
+    const response = await fetch(url);
+    const json: {
+      balance: {
+        denom: string;
+        amount: string;
+      };
+    } = await response.json();
+    return json;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export async function testAll() {
-  const chunkSize = await getChunkSize();
-  const chunks = await getChunks();
-  const chunksUnpairingForUnstakingChunkInfos =
+  //fetch data
+  const chunksForUnpairingInfo =
     await getChunksUnpairingForUnstakingChunkInfos();
-  const chunk = await getChunk("string");
-  const chunkUnpairingForUnstakingChunkInfo =
-    await getChunkUnpairingForUnstakingChunkInfo("string");
   const epoch = await getEpoch();
   const insurances = await getInsurances();
   const insurancesWithdrawInsuranceRequests =
     await getInsurancesWithdrawInsuranceRequests();
-  const insurance = await getInsurance("string");
-  const insuranceWithdrawInsuranceRequest =
-    await getInsuranceWithdrawInsuranceRequest("string");
-  const minimumCollateral = await getMinimumCollateral();
-  const params = await getParams();
   const states = await getStates();
 
-  console.log(
-    chunkSize,
-    chunks,
-    chunksUnpairingForUnstakingChunkInfos,
-    chunk,
-    chunkUnpairingForUnstakingChunkInfo,
-    epoch,
-    insurances,
-    insurancesWithdrawInsuranceRequests,
-    insurance,
-    insuranceWithdrawInsuranceRequest,
-    minimumCollateral,
-    params,
-    states
+  //check if data is null
+  if (states == null) throw new Error("states is null");
+  if (epoch?.epoch == null) throw new Error("epoch is null");
+
+  //processing data
+  const totalSupplyOfLSCanto = fromWei(
+    states?.net_amount_state.ls_tokens_total_supply
   );
+  const insuranceCoverage = fromWei(
+    (
+      Number(states?.net_amount_state.num_paired_chunks) *
+      Number(states?.net_amount_state.chunk_size)
+    ).toString()
+  );
+
+  const insuranceCollateral = fromWei(
+    states?.net_amount_state.total_paired_insurance_tokens
+  );
+  const accumulatedCommission = fromWei(
+    states?.net_amount_state.reward_module_acc_balance
+  );
+  const mintRate = Number(states?.net_amount_state.mint_rate).toFixed(2);
+  const remainingChunkSlots = states?.net_amount_state.remaining_chunk_slots;
+  const remainingTimeToNextEpoch = secondsToDays(epoch?.epoch.duration);
+  const UnbondingChunksAmount = fromWei(
+    states?.net_amount_state.total_unbonding_chunks_balance
+  );
+  const unpairingInsuranceAmount = fromWei(
+    states?.net_amount_state.total_unpairing_insurance_tokens
+  );
+
+  const Insurances_Active = insurances?.insurances.filter(
+    (insurance) => insurance.insurance.status === "INSURANCE_STATUS_PAIRED"
+  );
+  const Insurances_Candidates = insurances?.insurances.filter(
+    (insurance) => insurance.insurance.status === "INSURANCE_STATUS_PAIRING"
+  );
+
+  const withdraw_insurance_requests =
+    insurancesWithdrawInsuranceRequests?.withdraw_insurance_requests;
+
+  const liquid_unstake_requests =
+    chunksForUnpairingInfo?.unpairing_for_unstaking_chunk_infos.map(
+      async (chunk) => {
+        try {
+          return {
+            chunk_id: chunk.chunk_id,
+            delegator_address: chunk.delegator_address,
+          };
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    );
+
+  const insurancesActive = Insurances_Active?.map(async (insurance) => {
+    try {
+      const insuranceAmount = await getInsuranceAmount(
+        insurance.derived_address
+      );
+      const accumulatedCommission = await getAccumulatedCommission(
+        insurance.fee_pool_address
+      );
+      if (accumulatedCommission == null)
+        throw new Error("accumulatedCommission is null");
+
+      if (insuranceAmount == null) throw new Error("insuranceAmount is null");
+
+      return {
+        id: insurance.insurance.id,
+        provider: insurance.insurance.provider_address,
+        validator: insurance.insurance.validator_address,
+        fee_rates: Number(insurance.insurance.fee_rate).toFixed(2),
+        accumulated_commission: fromWei(accumulatedCommission.balance.amount),
+        insurance_amount: fromWei(insuranceAmount.balance.amount),
+      };
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
+  const insurancesCandidate = Insurances_Candidates?.map(async (insurance) => {
+    try {
+      const insuranceAmount = await getInsuranceAmount(
+        insurance.derived_address
+      );
+      const accumulatedCommission = await getAccumulatedCommission(
+        insurance.fee_pool_address
+      );
+      if (accumulatedCommission == null)
+        throw new Error("accumulatedCommission is null");
+
+      if (insuranceAmount == null) throw new Error("insuranceAmount is null");
+
+      return {
+        id: insurance.insurance.id,
+        provider: insurance.insurance.provider_address,
+        validator: insurance.insurance.validator_address,
+        fee_rates: Number(insurance.insurance.fee_rate).toFixed(2),
+        accumulated_commission: fromWei(accumulatedCommission.balance.amount),
+        insurance_amount: fromWei(insuranceAmount.balance.amount),
+      };
+    } catch (error) {
+      console.log(error);
+    }
+  });
+  if (insurancesActive == null) throw new Error("insurancesActive is null");
+  if (insurancesCandidate == null)
+    throw new Error("insurancesCandidate is null");
+
+  return {
+    total_supply_of_ls_canto: totalSupplyOfLSCanto,
+    insurance_coverage: insuranceCoverage,
+    insurance_collateral: insuranceCollateral,
+    accumulated_commission: accumulatedCommission,
+    mint_rate: mintRate,
+    remaining_chunk_slots: remainingChunkSlots,
+    remaining_time_to_next_epoch: remainingTimeToNextEpoch,
+    unbonding_chunks_amount: UnbondingChunksAmount,
+    unpairing_insurance_amount: unpairingInsuranceAmount,
+    insurances_active: await Promise.all(insurancesActive),
+    insurances_candidate: await Promise.all(insurancesCandidate),
+  };
 }

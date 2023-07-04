@@ -31,6 +31,7 @@ export const result = {
       key: "mint_rate",
       value: "0.98",
       symbol: "canto",
+      type: "float",
       additional: "(1 Canto = 0.98 LSCanto)",
     },
     {
@@ -41,7 +42,7 @@ export const result = {
     },
     {
       name: "Remaining time to epoch",
-      key: "remaining_time_to_epoch",
+      key: "remaining_time_to_next_epoch",
       value: "5",
       symbol: "more days",
       type: "DateTime",

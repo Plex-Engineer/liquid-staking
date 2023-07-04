@@ -5,12 +5,7 @@ import { result } from "@/config/result";
 import Table from "@/components/table";
 import Header from "@/components/header";
 import Text from "@/components/text";
-import { testAll, testMessage } from "./actions";
-
-const inter = Inter({
-  weight: "400",
-  subsets: ["latin"],
-});
+import { testAll } from "./actions";
 
 //function change 2500000 to 2.5M or 250000 to 250K
 function toCurrencyFormat(value: string) {
@@ -23,11 +18,12 @@ function toCurrencyFormat(value: string) {
   }
   return num.toString();
 }
-export default function Home() {
+export default async function Home() {
   //   const data = Convert.toLSData(JSON.stringify(result));
-  testAll();
+  const data = await testAll();
+
   return (
-    <main className={styles.main + " " + " " + inter.className}>
+    <main className={styles.main}>
       <Header />
       <div className={styles.container}>
         <Text size="lg" font="Video_Type">
@@ -40,8 +36,8 @@ export default function Home() {
               name={item.name}
               value={
                 item.type == undefined
-                  ? toCurrencyFormat(item.value)
-                  : item.value
+                  ? toCurrencyFormat(data[item.key])
+                  : data[item.key]
               }
               symbol={item.symbol}
               additional={item.additional}
@@ -58,7 +54,9 @@ export default function Home() {
         </Text>
         <Table
           headers={Object.keys(result.Insurances.active[0])}
-          data={result.Insurances.active.map((item) => Object.values(item))}
+          data={data!.insurances_active.map((item) =>
+            Object.values(item ?? "null")
+          )}
         />
       </div>
 
@@ -68,7 +66,9 @@ export default function Home() {
         </Text>
         <Table
           headers={Object.keys(result.Insurances.candidates[0])}
-          data={result.Insurances.candidates.map((item) => Object.values(item))}
+          data={data!.insurances_candidate.map((item) =>
+            Object.values(item ?? "null")
+          )}
         />
       </div>
       <div
