@@ -1,8 +1,6 @@
 const baseURL = "https://liquidstaking.plexnode.wtf/canto/liquidstaking";
 
-export const config = {
-	runtime: 'edge',
-};
+export const runtime = 'edge';
 
 async function getChunkSize() {
   "use server";

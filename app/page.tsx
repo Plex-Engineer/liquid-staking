@@ -6,6 +6,8 @@ import Header from "@/components/header";
 import Text from "@/components/text";
 import { testAll } from "./actions";
 
+export const runtime = 'edge';
+
 //function change 2500000 to 2.5M or 250000 to 250K
 function toCurrencyFormat(value: string) {
   const num = Number(value);
