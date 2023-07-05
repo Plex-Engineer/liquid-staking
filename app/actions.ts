@@ -384,22 +384,22 @@ export async function testAll() {
     (insurance) => insurance.insurance.status === "INSURANCE_STATUS_PAIRING"
   );
 
-  const withdraw_insurance_requests =
-    insurancesWithdrawInsuranceRequests?.withdraw_insurance_requests;
+  //   const withdraw_insurance_requests =
+  //     insurancesWithdrawInsuranceRequests?.withdraw_insurance_requests;
 
-  const liquid_unstake_requests =
-    chunksForUnpairingInfo?.unpairing_for_unstaking_chunk_infos.map(
-      async (chunk) => {
-        try {
-          return {
-            chunk_id: chunk.chunk_id,
-            delegator_address: chunk.delegator_address,
-          };
-        } catch (error) {
-          console.log(error);
-        }
-      }
-    );
+  //   const liquid_unstake_requests =
+  //     chunksForUnpairingInfo?.unpairing_for_unstaking_chunk_infos.map(
+  //       async (chunk) => {
+  //         try {
+  //           return {
+  //             chunk_id: chunk.chunk_id,
+  //             delegator_address: chunk.delegator_address,
+  //           };
+  //         } catch (error) {
+  //           console.log(error);
+  //         }
+  //       }
+  //     );
 
   const insurancesActive = Insurances_Active?.map(async (insurance) => {
     try {
