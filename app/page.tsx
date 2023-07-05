@@ -20,7 +20,6 @@ function toCurrencyFormat(value: string) {
 export default async function Home() {
   //   const data = Convert.toLSData(JSON.stringify(result));
   const data = await testAll();
-
   return (
     <main className={styles.main}>
       <Header />
@@ -35,8 +34,10 @@ export default async function Home() {
               name={item.name}
               value={
                 item.type == undefined
-                  ? toCurrencyFormat(data[item.key])
-                  : data[item.key]
+                  ? //@ts-ignore
+                    toCurrencyFormat(data[item.key])
+                  : //@ts-ignore
+                    data[item.key]
               }
               symbol={item.symbol}
               additional={item.additional}
