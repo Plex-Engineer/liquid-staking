@@ -1,6 +1,5 @@
 import DCard from "@/components/d_card";
 import styles from "./page.module.css";
-import { Inter } from "next/font/google";
 import { result } from "@/config/result";
 import Table from "@/components/table";
 import Header from "@/components/header";
