@@ -2,52 +2,61 @@ export const result = {
   LS_Dashboard: [
     {
       name: "Total Supply of LSCanto",
+      key: "total_supply_of_ls_canto",
       value: "25000000",
       symbol: "LSCanto",
-
       additional: "",
     },
     {
       name: "Insurance Coverage",
+      key: "insurance_coverage",
       value: "25000000",
       symbol: "canto",
       additional: "(= 5 chunks)",
     },
     {
       name: "Insurance Collateral",
+      key: "insurance_collateral",
       value: "12500",
       symbol: "canto",
     },
     {
       name: "Accumulated Commission",
+      key: "accumulated_commission",
       value: "600000",
       symbol: "canto",
     },
     {
       name: "Mint Rate",
+      key: "mint_rate",
       value: "0.98",
       symbol: "canto",
+      type: "float",
       additional: "(1 Canto = 0.98 LSCanto)",
     },
     {
       name: "Remaining Chunk Slots",
+      key: "remaining_chunk_slots",
       value: "5",
       additional: "(=25M canto)",
     },
     {
       name: "Remaining time to epoch",
+      key: "remaining_time_to_next_epoch",
       value: "5",
       symbol: "more days",
       type: "DateTime",
     },
     {
       name: "Unbonding Chunks Amount",
+      key: "unbonding_chunks_amount",
       value: "25000000",
       symbol: "canto",
       additional: "(= 5 chunks is unbonding)",
     },
     {
       name: "Unpairing Insurance Amount",
+      key: "unpairing_insurance_amount",
       value: "125000",
       symbol: "canto",
       additional: "(= 7 unpairing insurances )",
@@ -56,7 +65,7 @@ export const result = {
   Insurances: {
     active: [
       {
-        id: "1",
+        ID: "1",
         provider: "canto232864827346824836847",
         validator: "cantovaloper1",
         fee_rates: 6,
@@ -64,7 +73,7 @@ export const result = {
         insurance_amount: 2500000,
       },
       {
-        id: "2",
+        ID: "2",
         provider: "canto2328642348728934798237",
         validator: "cantovaloper2",
         fee_rates: 3.7,
@@ -72,7 +81,7 @@ export const result = {
         insurance_amount: 12000,
       },
       {
-        id: "3",
+        ID: "3",
         provider: "canto8724976263423423423424",
         validator: "cantovaloper3",
         fee_rates: 23.22,
@@ -80,7 +89,7 @@ export const result = {
         insurance_amount: 100000,
       },
       {
-        id: "4",
+        ID: "4",
         provider: "canto8724976263423423423424",
         validator: "cantovaloper4",
         fee_rates: 23.22,
@@ -88,7 +97,7 @@ export const result = {
         insurance_amount: 100000,
       },
       {
-        id: "5",
+        ID: "5",
         provider: "canto8724976263423423423424",
         validator: "cantovaloper5",
         fee_rates: 23.22,
@@ -96,7 +105,7 @@ export const result = {
         insurance_amount: 100000,
       },
       {
-        id: "6",
+        ID: "6",
         provider: "canto8724976263423423423424",
         validator: "cantovaloper6",
         fee_rates: 23.22,
@@ -104,7 +113,7 @@ export const result = {
         insurance_amount: 100000,
       },
       {
-        id: "7",
+        ID: "7",
         provider: "canto8724976263423423423424",
         validator: "cantovaloper7",
         fee_rates: 23.22,
@@ -112,7 +121,7 @@ export const result = {
         insurance_amount: 100000,
       },
       {
-        id: "8",
+        ID: "8",
         provider: "canto8724976263423423423424",
         validator: "cantovaloper8",
         fee_rates: 23.22,
@@ -120,7 +129,7 @@ export const result = {
         insurance_amount: 100000,
       },
       {
-        id: "9",
+        ID: "9",
         provider: "canto8724976263423423423424",
         validator: "cantovaloper9",
         fee_rates: 23.22,
@@ -130,7 +139,7 @@ export const result = {
     ],
     candidates: [
       {
-        id: "10",
+        ID: "10",
         provider: "canto8724976263423423423424",
         validator: "cantovaloper10",
         fee_rates: 23.22,
@@ -138,7 +147,7 @@ export const result = {
         insurance_amount: 40000,
       },
       {
-        id: "11",
+        ID: "11",
         provider: "canto8724976263423423423424",
         validator: "cantovaloper11",
         fee_rates: 2.3,
@@ -146,7 +155,7 @@ export const result = {
         insurance_amount: 34000,
       },
       {
-        id: "12",
+        ID: "12",
         provider: "canto8724976263423423423424",
         validator: "cantovaloper12",
         fee_rates: 23.22,
@@ -157,48 +166,15 @@ export const result = {
     pending: {
       withdraw_requests: [
         {
+          ID: "404",
           requester: "canto82137928479834682746827468234",
-          insurance_id: "1",
-        },
-        {
-          requester: "canto82137928479834682746827468234",
-          insurance_id: "2",
-        },
-        {
-          requester: "canto82137928479834682746827468234",
-          insurance_id: "3",
-        },
-        {
-          requester: "canto82137928479834682746827468234",
-          insurance_id: "4",
-        },
-        {
-          requester: "canto82137928479834682746827468234",
-          insurance_id: "5",
         },
       ],
     },
     liquid_unstake_requests: [
       {
+        ID: "404",
         requester: "canto82137928479834682746827468234",
-        insurance_id: "10",
-      },
-
-      {
-        requester: "canto82137928479834682746827468234",
-        insurance_id: "7",
-      },
-      {
-        requester: "canto82137928479834682746827468234",
-        insurance_id: "6",
-      },
-      {
-        requester: "canto82137928479834682746827468234",
-        insurance_id: "5",
-      },
-      {
-        requester: "canto82137928479834682746827468234",
-        insurance_id: "4",
       },
     ],
   },

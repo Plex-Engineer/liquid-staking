@@ -1,15 +1,12 @@
 import DCard from "@/components/d_card";
 import styles from "./page.module.css";
-import { Inter } from "next/font/google";
 import { result } from "@/config/result";
 import Table from "@/components/table";
 import Header from "@/components/header";
 import Text from "@/components/text";
+import { fetchAllData } from "./actions";
 
-const inter = Inter({
-  weight: "400",
-  subsets: ["latin"],
-});
+export const runtime = "edge";
 
 //function change 2500000 to 2.5M or 250000 to 250K
 function toCurrencyFormat(value: string) {
@@ -22,11 +19,10 @@ function toCurrencyFormat(value: string) {
   }
   return num.toString();
 }
-export default function Home() {
-  //   const data = Convert.toLSData(JSON.stringify(result));
-
+export default async function Home() {
+  const data = await fetchAllData();
   return (
-    <main className={styles.main + " " + " " + inter.className}>
+    <main className={styles.main}>
       <Header />
       <div className={styles.container}>
         <Text size="lg" font="Video_Type">
@@ -39,8 +35,10 @@ export default function Home() {
               name={item.name}
               value={
                 item.type == undefined
-                  ? toCurrencyFormat(item.value)
-                  : item.value
+                  ? //@ts-ignore
+                    toCurrencyFormat(data[item.key])
+                  : //@ts-ignore
+                    data[item.key]
               }
               symbol={item.symbol}
               additional={item.additional}
@@ -57,7 +55,9 @@ export default function Home() {
         </Text>
         <Table
           headers={Object.keys(result.Insurances.active[0])}
-          data={result.Insurances.active.map((item) => Object.values(item))}
+          data={data!.insurances_active.map((item) =>
+            Object.values(item ?? "null")
+          )}
         />
       </div>
 
@@ -67,7 +67,9 @@ export default function Home() {
         </Text>
         <Table
           headers={Object.keys(result.Insurances.candidates[0])}
-          data={result.Insurances.candidates.map((item) => Object.values(item))}
+          data={data!.insurances_candidate.map((item) =>
+            Object.values(item ?? "null")
+          )}
         />
       </div>
       <div
@@ -86,9 +88,9 @@ export default function Home() {
           <Table
             headers={Object.keys(
               result.Insurances.pending.withdraw_requests[0]
-            )}
-            data={result.Insurances.pending.withdraw_requests.map((item) =>
-              Object.values(item)
+            )} //@ts-ignore
+            data={data.withdraw_insurance_requests?.map((item) =>
+              Object.values(item ?? "?")
             )}
           />
         </div>
@@ -98,8 +100,8 @@ export default function Home() {
           </Text>
           <Table
             headers={Object.keys(result.Insurances.liquid_unstake_requests[0])}
-            data={result.Insurances.liquid_unstake_requests.map((item) =>
-              Object.values(item)
+            data={data.liquid_unstake_requests!.map((item) =>
+              Object.values(item ?? "?")
             )}
           />
         </div>

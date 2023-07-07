@@ -1,13 +1,14 @@
+import Hover from "./hover";
 import styles from "./table.module.css";
 
 interface Props {
   headers: string[];
-  data: (string | number)[][];
+  data: string[][];
 }
 
 function makeExcerpt(text: string, length: number) {
   if (text.length > length) {
-    return text.substring(0, length) + "...";
+    return <Hover content={text}>{text.substring(0, length) + "..."}</Hover>;
   }
   return text;
 }
@@ -36,7 +37,7 @@ const Table = (props: Props) => {
             {row.map((cell, index) => {
               return (
                 <div key={index} className={styles.cell}>
-                  {makeExcerpt(cell.toString(), 10)}
+                  {makeExcerpt(cell, 15)}
                 </div>
               );
             })}
