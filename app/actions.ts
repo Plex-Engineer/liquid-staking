@@ -1,9 +1,10 @@
+"use server";
 const baseURL = "https://liquidstaking.plexnode.wtf/canto/liquidstaking";
 
-export const runtime = 'edge';
+export const runtime = "edge";
 
 async function getChunkSize() {
-  "use server";
+  //   "use server";
   const url = `${baseURL}/v1/chunk_size`;
   try {
     const response = await fetch(url);
@@ -28,7 +29,7 @@ type Chunk_Status =
   | "CHUNK_STATUS_UNPAIRING_FOR_UNSTAKING";
 
 async function getChunks() {
-  "use server";
+  //   "use server";
   const url = `${baseURL}/v1/chunks`;
   try {
     const response = await fetch(url);
@@ -56,7 +57,7 @@ async function getChunks() {
 }
 
 async function getChunksUnpairingForUnstakingChunkInfos() {
-  "use server";
+  //   "use server";
   const url = `${baseURL}/v1/chunks/unpairing_for_unstaking_chunk_infos?queued=true`;
   try {
     const response = await fetch(url);
@@ -80,7 +81,7 @@ async function getChunksUnpairingForUnstakingChunkInfos() {
 }
 
 async function getChunk(id: string) {
-  "use server";
+  //   "use server";
   const url = `${baseURL}/v1/chunks/${id}`;
   try {
     const response = await fetch(url);
@@ -100,7 +101,7 @@ async function getChunk(id: string) {
 }
 
 async function getChunkUnpairingForUnstakingChunkInfo(id: string) {
-  "use server";
+  //   "use server";
   const url = `${baseURL}/v1/chunks/${id}/unpairing_for_unstaking_chunk_infos`;
   try {
     const response = await fetch(url);
@@ -118,7 +119,7 @@ async function getChunkUnpairingForUnstakingChunkInfo(id: string) {
 }
 
 async function getEpoch() {
-  "use server";
+  //   "use server";
   const url = `${baseURL}/v1/epoch`;
   try {
     const response = await fetch(url);
@@ -145,7 +146,7 @@ type Insurance_Status =
   | "INSURANCE_STATUS_UNPAIRED";
 
 async function getInsurances() {
-  "use server";
+  //   "use server";
   const url = `${baseURL}/v1/insurances`;
   try {
     const response = await fetch(url);
@@ -176,7 +177,7 @@ async function getInsurances() {
 }
 
 async function getInsurancesWithdrawInsuranceRequests() {
-  "use server";
+  //   "use server";
   const url = `${baseURL}/v1/insurances/withdraw_insurance_requests`;
   try {
     const response = await fetch(url);
@@ -198,7 +199,7 @@ async function getInsurancesWithdrawInsuranceRequests() {
 }
 
 async function getInsurance(id: string) {
-  "use server";
+  //   "use server";
   const url = `${baseURL}/v1/insurances/${id}`;
   try {
     const response = await fetch(url);
@@ -228,7 +229,7 @@ function secondsToDays(seconds: string) {
   return (parseFloat(seconds) / 86400).toString();
 }
 async function getInsuranceWithdrawInsuranceRequest(id: string) {
-  "use server";
+  //   "use server";
   const url = `${baseURL}/v1/insurances/${id}/withdraw_insurance_requests`;
   try {
     const response = await fetch(url);
@@ -243,7 +244,7 @@ async function getInsuranceWithdrawInsuranceRequest(id: string) {
   }
 }
 async function getMinimumCollateral() {
-  "use server";
+  //   "use server";
   const url = `${baseURL}/v1/minimum_collateral`;
   try {
     const response = await fetch(url);
@@ -260,7 +261,7 @@ async function getMinimumCollateral() {
 }
 
 async function getParams() {
-  "use server";
+  //   "use server";
   const url = `${baseURL}/v1/params`;
   try {
     const response = await fetch(url);
@@ -284,7 +285,7 @@ async function getParams() {
 }
 
 async function getStates() {
-  "use server";
+  //   "use server";
   const url = `${baseURL}/v1/states`;
   try {
     const response = await fetch(url);
@@ -318,7 +319,7 @@ async function getStates() {
 }
 
 async function getAccumulatedCommission(fee_pool_address: string) {
-  "use server";
+  //   "use server";
   const url = `https://liquidstaking.plexnode.wtf/cosmos/bank/v1beta1/balances/${fee_pool_address}/by_denom?denom=acanto`;
   try {
     const response = await fetch(url);
@@ -335,7 +336,7 @@ async function getAccumulatedCommission(fee_pool_address: string) {
 }
 
 async function getInsuranceAmount(derived_address: string) {
-  "use server";
+  //   "use server";
   const url = `https://liquidstaking.plexnode.wtf/cosmos/bank/v1beta1/balances/${derived_address}/by_denom?denom=acanto`;
   try {
     const response = await fetch(url);
@@ -352,7 +353,7 @@ async function getInsuranceAmount(derived_address: string) {
 }
 
 export async function testAll() {
-  "use server";
+  //   "use server";
   //fetch data
   const chunksForUnpairingInfo =
     await getChunksUnpairingForUnstakingChunkInfos();
