@@ -4,9 +4,9 @@ import { result } from "@/config/result";
 import Table from "@/components/table";
 import Header from "@/components/header";
 import Text from "@/components/text";
-import { testAll } from "./actions";
+import { fetchAllData } from "./actions";
 
-export const runtime = 'edge';
+export const runtime = "edge";
 
 //function change 2500000 to 2.5M or 250000 to 250K
 function toCurrencyFormat(value: string) {
@@ -20,8 +20,7 @@ function toCurrencyFormat(value: string) {
   return num.toString();
 }
 export default async function Home() {
-  //   const data = Convert.toLSData(JSON.stringify(result));
-  const data = await testAll();
+  const data = await fetchAllData();
   return (
     <main className={styles.main}>
       <Header />
@@ -89,9 +88,9 @@ export default async function Home() {
           <Table
             headers={Object.keys(
               result.Insurances.pending.withdraw_requests[0]
-            )}
-            data={result.Insurances.pending.withdraw_requests.map((item) =>
-              Object.values(item)
+            )} //@ts-ignore
+            data={data.withdraw_insurance_requests?.map((item) =>
+              Object.values(item ?? "?")
             )}
           />
         </div>
@@ -101,8 +100,8 @@ export default async function Home() {
           </Text>
           <Table
             headers={Object.keys(result.Insurances.liquid_unstake_requests[0])}
-            data={result.Insurances.liquid_unstake_requests.map((item) =>
-              Object.values(item)
+            data={data.liquid_unstake_requests!.map((item) =>
+              Object.values(item ?? "?")
             )}
           />
         </div>

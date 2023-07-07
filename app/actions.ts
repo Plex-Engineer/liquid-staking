@@ -4,6 +4,22 @@ const baseURL = "https://liquidstaking.plexnode.wtf/canto/liquidstaking";
 
 export const runtime = "edge";
 
+type Chunk_Status =
+  | "CHUNK_STATUS_UNSPECIFIED"
+  | "CHUNK_STATUS_UNSPECIFIED"
+  | "CHUNK_STATUS_PAIRING"
+  | "CHUNK_STATUS_PAIRED"
+  | "CHUNK_STATUS_UNPAIRING"
+  | "CHUNK_STATUS_UNPAIRING_FOR_UNSTAKING";
+
+type Insurance_Status =
+  | "INSURANCE_STATUS_UNSPECIFIED"
+  | "INSURANCE_STATUS_PAIRING"
+  | "INSURANCE_STATUS_PAIRED"
+  | "INSURANCE_STATUS_UNPAIRING"
+  | "INSURANCE_STATUS_UNPAIRING_FOR_WITHDRAWAL"
+  | "INSURANCE_STATUS_UNPAIRED";
+
 async function getChunkSize() {
   "use server";
   const url = `${baseURL}/v1/chunk_size`;
@@ -20,14 +36,6 @@ async function getChunkSize() {
     console.log(error);
   }
 }
-
-type Chunk_Status =
-  | "CHUNK_STATUS_UNSPECIFIED"
-  | "CHUNK_STATUS_UNSPECIFIED"
-  | "CHUNK_STATUS_PAIRING"
-  | "CHUNK_STATUS_PAIRED"
-  | "CHUNK_STATUS_UNPAIRING"
-  | "CHUNK_STATUS_UNPAIRING_FOR_UNSTAKING";
 
 async function getChunks() {
   "use server";
@@ -59,7 +67,7 @@ async function getChunks() {
 
 async function getChunksUnpairingForUnstakingChunkInfos() {
   "use server";
-  const url = `${baseURL}/v1/chunks/unpairing_for_unstaking_chunk_infos?queued=true`;
+  const url = `${baseURL}/v1/unpairing_for_unstaking_chunk_infos?queued=true`;
   try {
     const response = await fetch(url);
     const json: {
@@ -67,7 +75,10 @@ async function getChunksUnpairingForUnstakingChunkInfos() {
         {
           chunk_id: string;
           delegator_address: string;
-          escrowed_lstokens: string;
+          escrowed_lstokens: {
+            denom: string;
+            amount: string;
+          };
         }
       ];
       pagination: {
@@ -138,14 +149,6 @@ async function getEpoch() {
   }
 }
 
-type Insurance_Status =
-  | "INSURANCE_STATUS_UNSPECIFIED"
-  | "INSURANCE_STATUS_PAIRING"
-  | "INSURANCE_STATUS_PAIRED"
-  | "INSURANCE_STATUS_UNPAIRING"
-  | "INSURANCE_STATUS_UNPAIRING_FOR_WITHDRAWAL"
-  | "INSURANCE_STATUS_UNPAIRED";
-
 async function getInsurances() {
   "use server";
   const url = `${baseURL}/v1/insurances`;
@@ -179,7 +182,7 @@ async function getInsurances() {
 
 async function getInsurancesWithdrawInsuranceRequests() {
   "use server";
-  const url = `${baseURL}/v1/insurances/withdraw_insurance_requests`;
+  const url = `${baseURL}/v1/withdraw_insurance_requests`;
   try {
     const response = await fetch(url);
     const json: {
@@ -215,62 +218,6 @@ async function getInsurance(id: string) {
       };
       derived_address: string;
       fee_pool_address: string;
-    } = await response.json();
-    return json;
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-async function getInsuranceWithdrawInsuranceRequest(id: string) {
-  "use server";
-  const url = `${baseURL}/v1/insurances/${id}/withdraw_insurance_requests`;
-  try {
-    const response = await fetch(url);
-    const json: {
-      withdraw_insurance_request: {
-        insurance_id: string;
-      };
-    } = await response.json();
-    return json;
-  } catch (error) {
-    console.log(error);
-  }
-}
-async function getMinimumCollateral() {
-  "use server";
-  const url = `${baseURL}/v1/minimum_collateral`;
-  try {
-    const response = await fetch(url);
-    const json: {
-      minimum_collateral: {
-        denom: string;
-        amount: string;
-      };
-    } = await response.json();
-    return json;
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-async function getParams() {
-  "use server";
-  const url = `${baseURL}/v1/params`;
-  try {
-    const response = await fetch(url);
-    const json: {
-      params: {
-        dynamic_fee_rate: {
-          r0: string;
-          u_soft_cap: string;
-          u_hard_cap: string;
-          u_optimal: string;
-          slope1: string;
-          slope2: string;
-          max_fee_rate: string;
-        };
-      };
     } = await response.json();
     return json;
   } catch (error) {
@@ -346,22 +293,65 @@ async function getInsuranceAmount(derived_address: string) {
   }
 }
 
-export async function testAll() {
+// async function getUnpairingForUnstakingChunkInfos() {
+//   "use server";
+//   const url = `${baseURL}/v1/unpairing_for_unstaking_chunk_infos?queued=true`;
+//   try {
+//     const response = await fetch(url);
+//     const json: {
+//       unpairing_for_unstaking_chunk_infos: [
+//         {
+//           chunk_id: string;
+//           delegator_address: string;
+//           escrowed_lstokens: string;
+//         }
+//       ];
+//       pagination: {
+//         next_key: string;
+//         total: string;
+//       };
+//     } = await response.json();
+//     return json;
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
+
+// async function getWithdrawInsuranceRequests() {
+//   "use server";
+//   const url = `${baseURL}/v1/withdraw_insurance_requests`;
+//   try {
+//     const response = await fetch(url);
+//     const json: {
+//       withdraw_insurance_requests: [
+//         {
+//           insurance_id: string;
+//         }
+//       ];
+//       pagination: {
+//         next_key: string;
+//         total: string;
+//       };
+//     } = await response.json();
+//     return json;
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
+
+export async function fetchAllData() {
   "use server";
-  //fetch data
-  const chunksForUnpairingInfo =
-    await getChunksUnpairingForUnstakingChunkInfos();
+
   const epoch = await getEpoch();
   const insurances = await getInsurances();
-  const insurancesWithdrawInsuranceRequests =
-    await getInsurancesWithdrawInsuranceRequests();
+
   const states = await getStates();
 
   //check if data is null
   if (states == null) throw new Error("states is null");
   if (epoch?.epoch == null) throw new Error("epoch is null");
 
-  //processing data
+  //******** Dashboard elements start here ********
   const totalSupplyOfLSCanto = fromWei(
     states?.net_amount_state.ls_tokens_total_supply
   );
@@ -388,6 +378,8 @@ export async function testAll() {
     states?.net_amount_state.total_unpairing_insurance_tokens
   );
 
+  //******** Dashboard elements end here ********
+
   const Insurances_Active = insurances?.insurances.filter(
     (insurance) => insurance.insurance.status === "INSURANCE_STATUS_PAIRED"
   );
@@ -395,22 +387,33 @@ export async function testAll() {
     (insurance) => insurance.insurance.status === "INSURANCE_STATUS_PAIRING"
   );
 
-  //   const withdraw_insurance_requests =
-  //     insurancesWithdrawInsuranceRequests?.withdraw_insurance_requests;
+  const withdraw_insurance_requests = (
+    await getInsurancesWithdrawInsuranceRequests()
+  )?.withdraw_insurance_requests.map((insurance) => {
+    try {
+      return {
+        id: insurance.insurance_id,
+        requestor: insurances?.insurances.find(
+          (ins) => ins.insurance.id === insurance.insurance_id
+        )?.insurance.provider_address,
+      };
+    } catch (error) {
+      console.log(error);
+    }
+  });
 
-  //   const liquid_unstake_requests =
-  //     chunksForUnpairingInfo?.unpairing_for_unstaking_chunk_infos.map(
-  //       async (chunk) => {
-  //         try {
-  //           return {
-  //             chunk_id: chunk.chunk_id,
-  //             delegator_address: chunk.delegator_address,
-  //           };
-  //         } catch (error) {
-  //           console.log(error);
-  //         }
-  //       }
-  //     );
+  const liquid_unstake_requests = (
+    await getChunksUnpairingForUnstakingChunkInfos()
+  )?.unpairing_for_unstaking_chunk_infos.map((chunk) => {
+    try {
+      return {
+        id: chunk.chunk_id,
+        requestor: chunk.delegator_address,
+      };
+    } catch (error) {
+      console.log(error);
+    }
+  });
 
   const insurancesActive = Insurances_Active?.map(async (insurance) => {
     try {
@@ -479,5 +482,7 @@ export async function testAll() {
     unpairing_insurance_amount: unpairingInsuranceAmount,
     insurances_active: await Promise.all(insurancesActive),
     insurances_candidate: await Promise.all(insurancesCandidate),
+    withdraw_insurance_requests: withdraw_insurance_requests,
+    liquid_unstake_requests: liquid_unstake_requests,
   };
 }
