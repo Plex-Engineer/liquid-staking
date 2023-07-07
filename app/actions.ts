@@ -1,4 +1,7 @@
 "use server";
+
+import { fromWei, secondsToDays } from "./utils";
+
 const baseURL = "https://liquidstaking.plexnode.wtf/canto/liquidstaking";
 
 export const runtime = "edge";
@@ -221,13 +224,6 @@ async function getInsurance(id: string) {
   }
 }
 
-function fromWei(amount: string) {
-  return (parseFloat(amount) / 1000000000000000000).toString();
-}
-
-function secondsToDays(seconds: string) {
-  return (parseFloat(seconds) / 86400).toString();
-}
 async function getInsuranceWithdrawInsuranceRequest(id: string) {
   //   "use server";
   const url = `${baseURL}/v1/insurances/${id}/withdraw_insurance_requests`;
